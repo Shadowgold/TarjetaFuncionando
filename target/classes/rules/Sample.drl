@@ -1,0 +1,26 @@
+package com.sample
+ 
+import com.sample.DroolsTest.Message;
+ 
+rule "Visa"
+    when
+    	c : Cliente();
+    	t : Tarjeta(nombreT == "Visa") from c.getTarjeta();
+    	p : Pago (pago == false) from c.getPago();
+
+    then
+    	p.setPago(true);
+        System.out.println( "El cliente " + c.getName() + " tiene Tarjeta Visa: Se realizó el pago" );
+        System.out.println(p.isPago());
+end
+
+rule "Mastercard"
+    when
+    	c : Cliente();
+    	t : Tarjeta(nombreT == "Mastercard") from c.getTarjeta();
+        p : Pago (pago == false) from c.getPago();
+    then
+    	//p.setPago(true);
+        System.out.println( "El cliente " + c.getName() + " tiene Tarjeta Mastercard: No se realizó el pago" );
+        System.out.println(p.isPago());
+end
